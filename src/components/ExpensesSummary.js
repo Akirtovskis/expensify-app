@@ -1,23 +1,29 @@
 import React from 'react';
-import numeral from 'numeral';
-import expensesTotal from '../selectors/expenses-total';
-import selectExpenses from '../selectors/expenses';
 import { connect } from 'react-redux';
+import numeral from 'numeral';
+import selectExpensesTotal from '../selectors/expenses-total';
+import selectExpenses from '../selectors/expenses';
 
-export const ExpensesSummary = (props) => {
-  const length = props.expenses.length;
-  const total = expensesTotal(props.expenses);
+
+export const ExpensesSummary = ({expenseCount, expensesTotal}) => {
+  const expenseWord = expenseCount===1 ? ' expense ' : ' expenses ';
+  const formattedExpensesTotal = numeral(expensesTotal/100).format('$0,0.00');
   return (
     <div>
-      Viewing : {(length===1 )? (length + " expense ") :(length + " expenses ") }
-      totalling : {numeral(total/100).format('$0,0.00')}
+      <h1>
+        Viewing : {expenseCount} {expenseWord} totalling : {formattedExpensesTotal}
+      </h1>
     </div>
   );
-}
+};
 
+// Here connecting component to store! NB (SHOULD look for ways to descructure props)
 const mapStateToProps = (state)=> {
+  const visibleExpenses = selectExpenses(state.expenses, state.filters);
+
   return {
-    expenses : selectExpenses(state.expenses, state.filters)
+    expenseCount : visibleExpenses.length,
+    expensesTotal : selectExpensesTotal(visibleExpenses)
   };
 };
 
