@@ -70,3 +70,14 @@ test('should leave array the same when trying to edit nonexistant id', ()=> {
   const state = expensesReducer(expenses, action);
   expect(state).toEqual(expenses);
 });
+
+//SET EXPENSES
+
+test('should set expenses', ()=>{
+  const action = {
+    type:'SET_EXPENSES',
+    expenses:[expenses[1]]
+  };
+  const state = expensesReducer(expenses, action);
+  expect(state).toEqual([expenses[1]]);
+});
