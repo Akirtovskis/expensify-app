@@ -9,10 +9,9 @@ exports[`should render header correctly 1`] = `
     <NavLink
       activeClassName="is-active"
       ariaCurrent="true"
-      exact={true}
-      to="/"
+      to="/dashboard"
     >
-      Home 
+      Dashboard 
     </NavLink>
     <NavLink
       activeClassName="is-active"
